@@ -7,15 +7,16 @@ target_sources(streaming_inference_decoder
     ${CMAKE_CURRENT_LIST_DIR}/Decoder.cpp
 )
 
-get_target_property(DEC_SOURCES decoder-library INTERFACE_SOURCES)
+if (NOT TARGET flashlight::fl-libraries)
+  message(FATAL_ERROR "flashight::fl-libraries must be built for inference")
+endif ()
 
 target_link_libraries(
   streaming_inference_decoder
   INTERFACE
     ${KENLM_LIBRARIES}
     streaming_inference_common
-    decoder-library
-    wav2letter-libraries
+    flashight::fl-libraries
 )
 
 target_compile_definitions(

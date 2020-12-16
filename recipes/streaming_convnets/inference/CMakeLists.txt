@@ -1,8 +1,6 @@
-cmake_minimum_required(VERSION 3.5.1)
+cmake_minimum_required(VERSION 3.10)
 
-project(wav2letter-inference)
-
-# Creates build rules for wav2letter inference processing graph.
+# Creates build rules for wav2letter inference 
 
 include(GNUInstallDirs)
 
@@ -31,16 +29,18 @@ set_property(
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+project(wav2letter-inference)
+
 add_library(wav2letter-inference "")
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
-#--- Find gflags ---
-find_package(gflags REQUIRED)
-if (gflags_FOUND)
-  message(STATUS "gflags found")
+#--- Find GFlags ---
+find_package(GFLAGS REQUIRED)
+if (GFLAGS_FOUND)
+  message(STATUS "GFLAGS found")
 else()
-  message(FATAL_ERROR "gflags not found")
+  message(FATAL_ERROR "GFLAGS not found")
 endif()
 
 #--- Download and build Google test ---
@@ -82,7 +82,7 @@ add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/inference/module)
 
 # Creates executable targets foreach example.
 if (W2L_INFERENCE_BUILD_EXAMPLES)
-  add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/inference/examples)
+  add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/examples)
 endif()
 
 # ------------------------ Tests ------------------------
@@ -121,7 +121,7 @@ function(build_test SRCFILE)
 endfunction(build_test)
 
 set(W2L_INFERENCE_TESTS_PATH
-  ${wav2letter-inference_SOURCE_DIR}/inference/module/test)
+  ${wav2letter-inference_SOURCE_DIR}/test)
 
 set(W2L_INFERENCE_TESTS_SOURCES
   ${W2L_INFERENCE_TESTS_PATH}/Conv1dTest.cpp
